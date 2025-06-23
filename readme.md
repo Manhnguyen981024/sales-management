@@ -100,6 +100,7 @@ A full-featured backend system for managing product sales, orders, and users acr
 ---
 
 ## 🗂️ Project Structure
+```
 sales-management/
 ├── product-service/
 │ ├── src/main/java/com/project/product
@@ -113,7 +114,7 @@ sales-management/
 └── k8s/
 ├── deployment.yaml
 ├── service.yaml
-
+```
 
 ---
 
