@@ -2,6 +2,7 @@ package com.demo.productservice.service;
 
 import com.demo.productservice.dto.ProductDto;
 import com.demo.productservice.entity.Product;
+import com.demo.productservice.exception.ResourceNotFoundException;
 import com.demo.productservice.repositoy.ProductRepository;
 import com.demo.productservice.specification.ProductSpecification;
 import com.demo.productservice.utils.ProductMapper;
@@ -36,5 +37,21 @@ public class ProductService {
         productRepository.save(newProduct);
 
         return ProductMapper.toProductDto(newProduct);
+    }
+
+    public ProductDto update(Long id, ProductDto productDto) {
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException(id)
+        );
+        product.setName(productDto.getName());
+        product.setPrice(productDto.getPrice());
+        return ProductMapper.toProductDto(productRepository.save(product));
+    }
+
+    public void delete(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException(id)
+        );
+        productRepository.delete(product);
     }
 }
