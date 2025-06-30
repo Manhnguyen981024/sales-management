@@ -14,8 +14,8 @@ jobs:
       - name: Build auth-service
         run: |
           cd auth-service
+          chmod +x mvnw      # ✅ thêm dòng này
           ./mvnw clean install -DskipTests
-
   build-product:
     runs-on: ubuntu-latest
     name: Build product-service
@@ -24,6 +24,7 @@ jobs:
       - name: Build product-service
         run: |
           cd product-service
+          chmod +x mvnw      # ✅ thêm dòng này
           ./mvnw clean install -DskipTests
 
   build-eureka:
@@ -34,4 +35,5 @@ jobs:
       - name: Build eureka-server
         run: |
           cd eureka-server
+          chmod +x mvnw      # ✅ thêm dòng này
           ./mvnw clean install -DskipTests
