@@ -11,7 +11,7 @@ jobs:
     name: Build auth-service
     steps:
       - name: Checkout source
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
       
       - name: Set up Java
         uses: actions/setup-java@v3
