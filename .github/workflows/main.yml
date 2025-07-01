@@ -65,7 +65,7 @@ jobs:
 
       - name: Build and push with Jib
         run: |
-          cd eureka-service
+          cd eureka-server
           chmod +x mvnw
           ./mvnw compile jib:build \
            -Djib.to.image=manhnguyen9810124/sales-management:eureka-service \
