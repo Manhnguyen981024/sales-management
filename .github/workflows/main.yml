@@ -24,7 +24,6 @@ jobs:
           cd auth-service
           chmod +x mvnw
           ./mvnw compile jib:build \
-           -Djib.to.image=manhnguyen9810124/sales-management:auth-service \
            -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} \
            -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }}
 
@@ -46,7 +45,6 @@ jobs:
           cd product-service
           chmod +x mvnw
           ./mvnw compile jib:build \
-           -Djib.to.image=manhnguyen9810124/sales-management:product-service \
            -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} \
            -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }}
 
@@ -68,6 +66,5 @@ jobs:
           cd eureka-server
           chmod +x mvnw
           ./mvnw compile jib:build \
-           -Djib.to.image=manhnguyen9810124/sales-management:eureka-service \
            -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} \
            -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }}
