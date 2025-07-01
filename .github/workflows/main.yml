@@ -32,20 +32,42 @@ jobs:
     runs-on: ubuntu-latest
     name: Build product-service
     steps:
-      - uses: actions/checkout@v3
-      - name: Build product-service
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Build and push with Jib
         run: |
           cd product-service
-          chmod +x mvnw      # ✅ thêm dòng này
-          ./mvnw clean install -DskipTests
+          chmod +x mvnw
+          ./mvnw compile jib:build \
+           -Djib.to.image=manhnguyen9810124/sales-management:product-service \
+           -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} \
+           -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }}
 
   build-eureka:
     runs-on: ubuntu-latest
     name: Build eureka-server
     steps:
-      - uses: actions/checkout@v3
-      - name: Build eureka-server
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Build and push with Jib
         run: |
-          cd eureka-server
-          chmod +x mvnw      # ✅ thêm dòng này
-          ./mvnw clean install -DskipTests
+          cd eureka-service
+          chmod +x mvnw
+          ./mvnw compile jib:build \
+           -Djib.to.image=manhnguyen9810124/sales-management:eureka-service \
+           -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} \
+           -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }}

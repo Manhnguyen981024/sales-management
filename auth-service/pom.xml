@@ -143,9 +143,9 @@
 				<version>3.4.0</version>
 				<configuration>
 					<to>
-						<image>manhnguyen9810124/sales-management:auth-service</image>
+						<image>manhnguyen9810124/sales-management</image>
 						<tags>
-							<tag>${project.version}</tag>
+							<tag>${project.name}-${project.version}</tag>
 						</tags>
 					</to>
 				</configuration>
