@@ -1,0 +1,18 @@
+server:
+  port: 9002
+spring:
+  application:
+    name: order-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/order_db
+    username: admin
+    password: admin123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  flyway:
+    enabled: false
+    baseline-on-migrate: true
+    baseline-version: 1
