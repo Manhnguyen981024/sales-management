@@ -3,10 +3,6 @@ server:
 spring:
   application:
     name: order-service
-  datasource:
-    url: jdbc:postgresql://localhost:5432/order_db
-    username: admin
-    password: admin123
   jpa:
     hibernate:
       ddl-auto: update
@@ -15,22 +11,5 @@ spring:
     enabled: false
     baseline-on-migrate: true
     baseline-version: 1
-  kafka:
-    bootstrap-servers: http://localhost:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-    consumer:
-      group-id: order-group
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring.json.trusted.packages: "*"
-    listener:
-      missing-topics-fatal: false
-    admin:
-      auto-create: true
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
+  config:
+    import: optional:configserver:http://localhost:8888
