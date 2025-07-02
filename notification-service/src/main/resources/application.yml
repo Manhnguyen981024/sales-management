@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: notification-service
+
+  kafka:
+    bootstrap-servers: http://localhost:9092
+    consumer:
+      group-id: notification-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+        spring.json.trusted.packages: "*"
+        spring.json.remove.type.headers: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: caomanh2410@gmail.com
+    password: wnigoocxpaiyqoyn
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.debug: true
+
+#dcee esys ucyc zjbr
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          autoconfigure:
+            mail=DEBUG:

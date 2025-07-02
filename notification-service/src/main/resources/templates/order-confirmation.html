@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Xác nhận đơn hàng</title>
+</head>
+<body>
+<p>Chào <b th:text="${customerName}">Tên khách hàng</b>,</p>
+
+<p>Cảm ơn bạn đã đặt hàng tại <b>MyShop</b>!</p>
+
+<p>Đơn hàng của bạn có mã <b th:text="${orderId}">123456</b> đã được tiếp nhận.</p>
+
+<p>
+    👉 Nhấn vào liên kết sau để xem chi tiết đơn hàng:
+    <a th:href="${orderLink}" th:text="${orderLink}">Xem đơn hàng</a>
+</p>
+
+<p>Trân trọng,<br/>Đội ngũ MyShop</p>
+</body>
+</html>

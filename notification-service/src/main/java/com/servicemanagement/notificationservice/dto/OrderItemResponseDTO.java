@@ -1,4 +1,4 @@
-package com.servicemanagement.orderservice.dto;
+package com.servicemanagement.notificationservice.dto;
 
 import lombok.Data;
 
