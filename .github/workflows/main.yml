@@ -48,6 +48,27 @@ jobs:
            -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} \
            -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }}
 
+  build-order:
+    runs-on: ubuntu-latest
+    name: Build order-service
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Build and push with Jib
+        run: |
+          cd order-service
+          chmod +x mvnw
+          ./mvnw compile jib:build \
+           -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} \
+           -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }}
+
   build-eureka:
     runs-on: ubuntu-latest
     name: Build eureka-server
