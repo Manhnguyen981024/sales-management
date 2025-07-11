@@ -5,8 +5,9 @@ spring:
     config:
       server:
         git:
-          uri: ${GIT_URL}
-          username: ${GIT_USERNAME}
-          password: ${GIT_TOKEN}
+          uri: https://github.com/Manhnguyen981024/freeLancer.git
+          username: ${GIT_USER_NAME}
+          password: ${GIT_PASS_WORD}
+
 server:
   port: 8888
