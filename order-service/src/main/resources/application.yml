@@ -12,4 +12,4 @@ spring:
     baseline-on-migrate: true
     baseline-version: 1
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:${CONFIG_SERVER_URI:http://localhost:8888}

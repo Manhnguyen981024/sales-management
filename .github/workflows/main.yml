@@ -50,7 +50,7 @@ jobs:
 
   build-notification:
     runs-on: ubuntu-latest
-    name: Build order-service
+    name: Build notification-service
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
