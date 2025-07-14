@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 @Tag(name = "Product API", description = "Quản lý sản phẩm")
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/")
+@RequestMapping("api/products")
 public class ProductController {
     private final ProductService productService;
 
@@ -32,7 +32,7 @@ public class ProductController {
             @ApiResponse(responseCode = "500", description = "Lỗi hệ thống")
     })
     @Parameter(name = "ProductDto", description = "Request body", example = "1")
-    @PostMapping("/products")
+    @PostMapping
     public ResponseEntity<ProductDto> saveProduct(
             @Validated(OnCreate.class)
             @RequestBody ProductDto productDto) {
@@ -46,7 +46,7 @@ public class ProductController {
             @ApiResponse(responseCode = "500", description = "Lỗi hệ thống")
     })
     @Parameter(name = "ProductDto", description = "Request body", example = "1")
-    @GetMapping("/products")
+    @GetMapping
     public ResponseEntity<Page<ProductDto>> getProducts(
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false , defaultValue = "10") int pageSize,
@@ -57,7 +57,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.findAll(page, pageSize, sortBy, name, quantity, price));
     }
 
-    @PutMapping("/products/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ProductDto> updateProduct(
             @PathVariable Long id,
             @Validated(OnUpdate.class)
@@ -66,7 +66,7 @@ public class ProductController {
         return ResponseEntity.ok(updatedProductDto);
     }
 
-    @DeleteMapping("/products/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ProductDto> deleteProduct(
             @PathVariable Long id) {
         productService.delete(id);

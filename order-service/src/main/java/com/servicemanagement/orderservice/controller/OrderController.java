@@ -11,12 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/orders")
 @AllArgsConstructor
 public class OrderController {
     private final OrderService orderService;
 
-    @PostMapping("/orders")
+    @PostMapping
     public ResponseEntity<OrderResponseDTO> addOrder(@RequestBody OrderRequest order) {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.save(order));
     }

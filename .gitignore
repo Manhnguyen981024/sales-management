@@ -1,0 +1,24 @@
+# Bỏ qua thư mục node_modules ở tất cả các service frontend
+**/node_modules/
+
+# IntelliJ / WebStorm
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# hệ thống
+.DS_Store
+Thumbs.db
+
+# output log
+*.log
+
+# build output
+dist/
+build/
+
+# môi trường
+.env
+.env.*

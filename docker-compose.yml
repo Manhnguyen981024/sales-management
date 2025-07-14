@@ -9,11 +9,11 @@ services:
       POSTGRES_PASSWORD: admin123
       POSTGRES_DB: auth
     volumes:
-    - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
     ports:
-    - "5432:5432"
+      - "5432:5432"
     networks:
-    - backend
+      - backend
 
   pgadmin:
     image: dpage/pgadmin4
@@ -22,12 +22,38 @@ services:
       PGADMIN_DEFAULT_EMAIL: manh@gmail.com
       PGADMIN_DEFAULT_PASSWORD: admin123
     ports:
-    - "8080:80"
+      - "8080:80"
     depends_on:
-    - postgres
+      - postgres
     networks:
-    - backend
+      - backend
 
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_INTERNAL://0.0.0.0:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  
 volumes:
   pgdata:
 

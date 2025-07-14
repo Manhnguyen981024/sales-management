@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "order-service", configuration = FeignConfig.class)
 public interface RevenueClient {
 
-    @GetMapping("/api/revenue/daily")
+    @GetMapping("/api/orders/revenue/daily")
     RevenueResponse getRevenueForDaily(@RequestParam("date") String date);
 
-    @GetMapping("/api/revenue/monthly")
+    @GetMapping("/api/orders/revenue/monthly")
     RevenueResponse getRevenueForMonthly(@RequestParam("month") String yearMonth);
 
 }
