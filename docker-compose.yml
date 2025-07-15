@@ -1,6 +1,13 @@
 version: '3.8'
 
 services:
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - backend
   postgres:
     image: postgres:latest
     container_name: postgres
@@ -33,6 +40,8 @@ services:
     container_name: zookeeper
     ports:
       - "2181:2181"
+    networks:
+      - backend
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -45,6 +54,8 @@ services:
       - "29092:29092"
     depends_on:
       - zookeeper
+    networks:
+      - backend
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -58,6 +69,7 @@ services:
     container_name: eureka-server
     ports:
       - "8761:8761"
+    restart: on-failure
     environment:
       - EUREKA_SERVER_URI=http://eureka-server:8761/eureka
     networks:
@@ -68,6 +80,7 @@ services:
     container_name: config-server
     ports:
       - "8888:8888"
+    restart: on-failure
     environment:
       - GIT_USER_NAME
       - GIT_PASS_WORD
@@ -82,12 +95,15 @@ services:
     container_name: auth-service
     ports:
       - "9000:9000"
+    restart: on-failure
     environment:
+      - POSTGRES_URI=jdbc:postgresql://postgres:5432/auth
       - CONFIG_SERVER_URI=http://config-server:8888
       - EUREKA_SERVER_URI=http://eureka-server:8761/eureka
     networks:
       - backend
     depends_on:
+      - postgres
       - eureka-server
       - config-server
 
@@ -96,12 +112,15 @@ services:
     container_name: product-service
     ports:
       - "9001:9001"
+    restart: on-failure
     environment:
+      - POSTGRES_URI=jdbc:postgresql://postgres:5432/product
       - CONFIG_SERVER_URI=http://config-server:8888
       - EUREKA_SERVER_URI=http://eureka-server:8761/eureka
     networks:
       - backend
     depends_on:
+      - postgres
       - eureka-server
       - config-server
 
@@ -110,12 +129,17 @@ services:
     container_name: order-service
     ports:
       - "9002:9002"
+    restart: on-failure
     environment:
+      - POSTGRES_URI=jdbc:postgresql://postgres:5432/order_db
       - CONFIG_SERVER_URI=http://config-server:8888
       - EUREKA_SERVER_URI=http://eureka-server:8761/eureka
+      - KAFKA_SERVER=kafka:9092
     networks:
       - backend
     depends_on:
+      - kafka
+      - postgres
       - eureka-server
       - config-server
 
@@ -124,6 +148,7 @@ services:
     container_name: reports-service
     ports:
       - "9003:9003"
+    restart: on-failure
     environment:
       - CONFIG_SERVER_URI=http://config-server:8888
       - EUREKA_SERVER_URI=http://eureka-server:8761/eureka
@@ -143,6 +168,7 @@ services:
       - EUREKA_SERVER_URI=http://eureka-server:8761/eureka
     networks:
       - backend
+    restart: on-failure
     depends_on:
       - order-service
       - product-service
@@ -152,6 +178,9 @@ services:
   notification-service:
     image: manhnguyen9810124/sales-management:notification-service-0.0.1
     container_name: notification-service
+    environment:
+      - KAFKA_SERVER=kafka:9092
+      - CONFIG_SERVER_URI=http://config-server:8888
     networks:
       - backend
     depends_on:
